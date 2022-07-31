@@ -45,14 +45,14 @@ const authSlice = createSlice({
     },
 
     logoutStart: (state) => {
-      state.logout.isFetching = true;
-      state.logout.success = false;
+      state.isFetching = true;
+      // state.logout.success = false;
     },
 
     logoutSucess: (state, action) => {
-      state.logout.isFetching = true;
+      state.isFetching = true;
       state.currentUser = null;
-      state.logout.success = true;
+      // state.logout.success = true;
     },
 
     logoutFailed: (state, action) => {

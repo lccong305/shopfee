@@ -28,6 +28,7 @@ const Payment = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.user?.currentUser);
+  const isFetching = useSelector((state) => state.auth.isFetching);
 
   const [name, setName] = useState(userProfile?.name);
   const [mail, setEmail] = useState(userProfile?.email);
@@ -38,7 +39,7 @@ const Payment = () => {
     if (!user) history.push("/login");
     if (!user?.token) return;
     if (user?.token) getUser(user?.token, dispatch);
-  }, []);
+  }, [isFetching]);
 
   return (
     <Container maxWidth="md">
