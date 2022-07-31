@@ -26,7 +26,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const user = useSelector((state) => state.auth?.currentUser.token);
+  const user = useSelector((state) => state.auth?.currentUser?.token);
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (
