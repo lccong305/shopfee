@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import productModalReducer from "./product-modal/productModalSlice";
 import productSlice from "./product/productSlice";
+import categoryReducer from "./category/categorySlice";
 
 import authReducer from "./auth/authSlice";
 import userReducer from "./user/userSlice";
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   cartItems: cartItemsReducer,
   auth: authReducer,
   user: userReducer,
+  cate: categoryReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

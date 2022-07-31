@@ -2,19 +2,28 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 
-import { persistor, store } from "./redux/store";
 import { Provider } from "react-redux";
+import { persistor, store } from "./redux/store";
 
 import "./assets/boxicons-2.0.7/css/boxicons.min.css";
 import "./sass/index.scss";
 
-import Layout from "./components/Layout";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { PersistGate } from "redux-persist/integration/react";
+import Layout from "./components/Layout";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Layout />
+        <PayPalScriptProvider
+          options={{
+            "client-id":
+              "AWCwAG1B2g09Z95vR_S1SdCTxS7Y4il6R6blE-uW_VVynOIupwxAd-nhLUyf1b8ljOYyOoOQNFIN8NPC",
+          }}
+        >
+          <Layout />
+        </PayPalScriptProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
