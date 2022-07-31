@@ -17,12 +17,12 @@ const Routes = () => {
       <Route path="/" exact component={Home} />
       <Route path="/catalog/:slug" component={Product} />
       <Route path="/catalog" component={Catalog} />
-      {/* <Route path="/cart" component={Cart} /> */}
-      <ProtectedRoute exact path="/cart" component={Cart} />
+      <Route path="/cart" component={Cart} />
+      <ProtectedRoute exact path="/payment" component={Payment} />
 
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/payment" component={Payment} />
+      {/* <Route path="/payment" component={Payment} /> */}
     </Switch>
   );
 };
