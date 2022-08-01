@@ -16,6 +16,7 @@ import FormGroup from "@mui/material/FormGroup";
 
 import { Typography } from "@mui/material";
 import PaypalCheckoutButton from "../components/PaypalCheckoutButton";
+// import { PayPalButtons } from "@paypal/react-paypal-js";
 
 const Payment = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -172,7 +173,6 @@ const Payment = () => {
                 />
               </FormGroup>
               {/* <PayPalButtons style={{ layout: "horizontal" }} />; */}
-
               <div className="paypal-container-button">
                 <PaypalCheckoutButton product={productInfoPayment} />
               </div>

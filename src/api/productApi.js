@@ -14,6 +14,10 @@ const productApi = {
     const url = `/Product/${slug}`;
     return axiosClient.get(url);
   },
+  getProductByCate: (slug) => {
+    const url = `/${slug}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default productApi;

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
-  product: [],
+  product: [], //detail
+  productByCate: [],
   pending: false,
   error: false,
 };
@@ -30,6 +31,19 @@ export const productSlice = createSlice({
       state.error = false;
       state.product = action.payload;
     },
+
+    getProductByCateStart: (state) => {
+      state.pending = true;
+    },
+    getProductByCateError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
+    getProductByCateSuccess: (state, action) => {
+      state.pending = false;
+      state.error = false;
+      state.productByCate = action.payload;
+    },
   },
 });
 
@@ -39,6 +53,9 @@ export const {
   getProductError,
   getProductSuccess,
   getDetailProductSuccess,
+  getProductByCateStart,
+  getProductByCateError,
+  getProductByCateSuccess,
 } = productSlice.actions;
 
 export default productSlice.reducer;

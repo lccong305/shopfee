@@ -21,12 +21,14 @@ const Header = () => {
   const { pathname } = useLocation();
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
   const [showDropdown, setShowDropdown] = useState(false);
+
   const headerRef = useRef(null);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const user = useSelector((state) => state.auth?.currentUser?.token);
+
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (
@@ -115,6 +117,9 @@ const Header = () => {
                 </Link>
               </div>
             ))}
+            <div className="header__menu__item header__menu__left__item">
+              {user ? <Link to="/admin">Admin</Link> : ""}
+            </div>
           </div>
           <div className="header__menu__right">
             <div className="header__menu__item header__menu__right__item">
@@ -125,16 +130,6 @@ const Header = () => {
                 <i className="bx bx-shopping-bag"></i>
               </Link>
             </div>
-            {/* <Dropdown className="header__menu__item header__menu__right__item dropdown-top">
-              <i
-                className="bx bx-user"
-                onClick={() => setShowndropdown(!showDropdown)}
-              ></i>
-              <DropdownContent className="dropdown-content">
-                <Link to="/login">Login</Link>
-                <Link to="/login">Register</Link>
-              </DropdownContent>
-            </Dropdown> */}
 
             <Dropdown>
               <DropdownTitle onClick={handleToggleShowDropdown} to="#">

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { loginUser } from "../redux/apiRequest";
 

@@ -9,7 +9,8 @@ import colors from "../assets/fake-data/product-color";
 import size from "../assets/fake-data/product-size";
 import Button from "../components/Button";
 import InfinityList from "../components/InfinityList";
-import { getAllProduct } from "../redux/apiRequest";
+import { getAllCate, getAllProduct } from "../redux/apiRequest";
+import { Link } from "react-router-dom";
 
 const Catalog = () => {
   //   const dispatch = useDispatch();
@@ -105,9 +106,12 @@ const Catalog = () => {
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const pending = useSelector((state) => state.products.pending);
+  const categories = useSelector((state) => state.cate.getCategory.category);
 
   useEffect(() => {
     getAllProduct(dispatch);
+    getAllCate(dispatch);
   }, [dispatch]);
 
   const initFilter = {
@@ -121,6 +125,10 @@ const Catalog = () => {
 
   const updateProducts = useCallback(() => {
     let temp = products;
+
+    if (filter.category.length > 0) {
+      temp = temp.filter((e) => filter.category.includes(e.categorySlug));
+    }
     if (filter.size.length > 0) {
       temp = temp.filter((e) => {
         const check = e.sizes.find((size) => filter.size.includes(size));
@@ -137,6 +145,12 @@ const Catalog = () => {
   const filterSelect = (type, checked, item) => {
     if (checked) {
       switch (type) {
+        case "CATEGORY":
+          setFilter({
+            ...filter,
+            category: [...filter.category, item.categorySlug],
+          });
+          break;
         case "SIZE":
           setFilter({ ...filter, size: [...filter.size, item.size] });
           break;
@@ -144,6 +158,12 @@ const Catalog = () => {
       }
     } else {
       switch (type) {
+        case "CATEGORY":
+          const newCategory = filter.category.filter(
+            (e) => e !== item.categorySlug
+          );
+          setFilter({ ...filter, category: newCategory });
+          break;
         case "SIZE":
           const newSize = filter.size.filter((e) => e !== item.size);
           setFilter({ ...filter, size: newSize });
@@ -174,38 +194,19 @@ const Catalog = () => {
               danh mục sản phẩm
             </div>
             <div className="catalog__filter__widget__content">
-              {category.map((item, index) => (
+              {categories?.map((item, index) => (
                 <div
                   key={index}
                   className="catalog__filter__widget__content__item"
                 >
-                  <CheckBox
-                    label={item.display}
+                  {/* <CheckBox
+                    label={item.name}
                     onChange={(input) =>
                       filterSelect("CATEGORY", input.checked, item)
                     }
                     checked={filter.category.includes(item.categorySlug)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="catalog__filter__widget">
-            <div className="catalog__filter__widget__title">màu sắc</div>
-            <div className="catalog__filter__widget__content">
-              {colors.map((item, index) => (
-                <div
-                  key={index}
-                  className="catalog__filter__widget__content__item"
-                >
-                  <CheckBox
-                    label={item.display}
-                    onChange={(input) =>
-                      filterSelect("COLOR", input.checked, item)
-                    }
-                    checked={filter.color.includes(item.color)}
-                  />
+                  /> */}
+                  <Link to={`category/${item.code}`}>{item.name}</Link>
                 </div>
               ))}
             </div>

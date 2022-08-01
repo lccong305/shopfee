@@ -1,4 +1,5 @@
 import productApi from "../api/productApi";
+import cateApi from "../api/cateApi";
 import axios from "axios";
 
 import {
@@ -6,6 +7,9 @@ import {
   getProductStart,
   getProductSuccess,
   getDetailProductSuccess,
+  getProductByCateStart,
+  getProductByCateError,
+  getProductByCateSuccess,
 } from "./product/productSlice";
 
 import {
@@ -19,6 +23,11 @@ import {
   logoutSucess,
   logoutFailed,
 } from "./auth/authSlice";
+import {
+  getCategoryStart,
+  getCategorySuccess,
+  getCategoryError,
+} from "./category/categorySlice";
 
 import { getUserStart, getUserSuccess, getUserFailed } from "./user/userSlice";
 
@@ -103,5 +112,27 @@ export const logOut = async (dispatch, history) => {
   } catch (err) {
     console.log(err);
     dispatch(logoutFailed());
+  }
+};
+
+export const getAllCate = async (dispatch) => {
+  dispatch(getCategoryStart());
+  try {
+    const res = await cateApi.getAll();
+    dispatch(getCategorySuccess(res));
+  } catch (err) {
+    console.log(err);
+    dispatch(getCategoryError());
+  }
+};
+
+export const getProductByCate = async (slug, dispatch) => {
+  dispatch(getProductByCateStart());
+  try {
+    const res = await productApi.getProductByCate(slug);
+    dispatch(getProductByCateSuccess(res));
+  } catch (err) {
+    console.log(err);
+    dispatch(getProductByCateError(err));
   }
 };

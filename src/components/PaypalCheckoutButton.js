@@ -9,24 +9,24 @@ const PaypalCheckoutButton = (props) => {
   };
   return (
     <PayPalButtons
-      style={{ height: 35 }}
-      createOrder={(data, actions) => {
-        return actions.order.create({
-          purchase_units: [
-            {
-              description: "cc",
-              amount: {
-                value: product.subTotalPrice,
-              },
-            },
-          ],
-        });
-      }}
-      onApprove={async (data, actions) => {
-        const order = await actions.order.capture;
-        console.log(order);
-        handleApprove(data.orderID);
-      }}
+      style={{ height: 35, layout: "horizontal" }}
+      // createOrder={(data, actions) => {
+      //   return actions.order.create({
+      //     purchase_units: [
+      //       {
+      //         description: "Pay the bill",
+      //         amount: {
+      //           value: product.subTotalPrice,
+      //         },
+      //       },
+      //     ],
+      //   });
+      // }}
+      // onApprove={async (data, actions) => {
+      //   const order = await actions.order.capture;
+      //   console.log(order);
+      //   handleApprove(data.orderID);
+      // }}
     />
   );
 };
