@@ -62,30 +62,30 @@ const Product = () => {
           name: "sizes",
           selector: (row) =>
             row.sizes.map((item, idx) => (
-              <div className="product__info__item__list__item" key={idx}>
-                <span className="product__info__item__list__item__size">
-                  {item}
-                </span>
+              <div className="product_size" key={idx}>
+                <span className="product_size_item">{item}</span>
               </div>
             )),
         },
         {
           name: "Action",
           width: " 400px",
-          cell: (row) => [
-            <button
-              onClick={(e) => handleEdit(e, row.code)}
-              className="btn-edit-product-admin btn btn-primary"
-            >
-              Edit
-            </button>,
-            <button
-              onClick={(e) => handleDelete(e, row.id)}
-              className="btn-edit-product-admin btn btn-primary"
-            >
-              Delete
-            </button>,
-          ],
+          cell: (row) => (
+            <div className="button-action-product">
+              <button
+                onClick={(e) => handleEdit(e, row.code)}
+                className="btn-edit-product-admin btn btn-primary"
+              >
+                Edit
+              </button>
+              <button
+                onClick={(e) => handleDelete(e, row.id)}
+                className="btn-edit-product-admin btn btn-primary"
+              >
+                Delete
+              </button>
+            </div>
+          ),
         },
       ]);
       setPending(false);
@@ -136,25 +136,27 @@ const Product = () => {
       {loading ? "isLoading" : ""}
       <DataTable
         fixedHeader
-        // progressPending={pending}
+        progressPending={pending}
         columns={columns}
         data={products}
         pagination
         subHeader
         persistTableHead
-        subHeaderComponent={[
-          <button
-            onClick={() => handleAdd()}
-            className="btn.btn-sm btn-info add-product"
-          >
-            Add new product
-          </button>,
-          <input
-            type="text"
-            className="cc-input form-control"
-            placeholder="Search here"
-          />,
-        ]}
+        subHeaderComponent={
+          <div>
+            <button
+              onClick={() => handleAdd()}
+              className="btn.btn-sm btn-info add-product"
+            >
+              Add new product
+            </button>
+            <input
+              type="text"
+              className="cc-input form-control"
+              placeholder="Search here"
+            />
+          </div>
+        }
       />
       ;
       {/* <div className="product__info__item">
