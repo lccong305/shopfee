@@ -1,0 +1,195 @@
+import React, { useEffect, useState } from "react";
+import AdminLayout from "../../layouts/AdminLayout/";
+
+import DataTable from "react-data-table-component";
+import { useDispatch, useSelector } from "react-redux";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import AddProduct from "./AddProduct";
+import EditProduct from "./EditProduct";
+import axios from "axios";
+import { deleteProduct, getDetailProduct } from "../../redux/apiRequest";
+
+const Product = () => {
+  const dispatch = useDispatch();
+
+  const products = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.pending);
+  const [columns, setColumns] = useState([]);
+  const [pending, setPending] = React.useState(true);
+  const [size, setSize] = useState();
+  const [open, setOpen] = useState(false);
+
+  const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setColumns([
+        {
+          name: "Name",
+          selector: (row) => row.name,
+          sortable: true,
+        },
+        {
+          name: "price",
+          selector: (row) => row.price,
+          sortable: true,
+        },
+        {
+          name: "shortDes",
+          selector: (row) => row.shortDes,
+          sortable: true,
+        },
+        {
+          name: "image",
+          width: "100px",
+          height: "100px",
+          selector: (row) => <img src={row.image} />,
+          sortable: true,
+        },
+        {
+          name: "categoryName",
+
+          selector: (row) => row.categoryName,
+          sortable: true,
+        },
+        {
+          name: "sizes",
+          selector: (row) =>
+            row.sizes.map((item, idx) => (
+              <div className="product__info__item__list__item" key={idx}>
+                <span className="product__info__item__list__item__size">
+                  {item}
+                </span>
+              </div>
+            )),
+        },
+        {
+          name: "Action",
+          width: " 400px",
+          cell: (row) => [
+            <button
+              onClick={(e) => handleEdit(e, row.code)}
+              className="btn-edit-product-admin btn btn-primary"
+            >
+              Edit
+            </button>,
+            <button
+              onClick={(e) => handleDelete(e, row.id)}
+              className="btn-edit-product-admin btn btn-primary"
+            >
+              Delete
+            </button>,
+          ],
+        },
+      ]);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    deleteProduct(dispatch, id);
+  };
+
+  const handleAdd = () => {
+    setShowAddProduct(!showAddProduct);
+  };
+  const product = useSelector((state) => state.products.product);
+  console.log(product);
+
+  const handleEdit = (e, slug) => {
+    e.preventDefault();
+    setShowEdit(!showEdit);
+    getDetailProduct(dispatch, slug);
+  };
+
+  function handleClose() {
+    setOpen(false);
+  }
+
+  const [filterText, setFilterText] = React.useState("");
+  const [resetPaginationToggle, setResetPaginationToggle] =
+    React.useState(false);
+  const filteredItems = products.filter(
+    (item) =>
+      item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+
+  const subHeaderComponentMemo = React.useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText("");
+      }
+    };
+  }, [filterText, resetPaginationToggle]);
+
+  return (
+    <AdminLayout>
+      {loading ? "isLoading" : ""}
+      <DataTable
+        fixedHeader
+        // progressPending={pending}
+        columns={columns}
+        data={products}
+        pagination
+        subHeader
+        persistTableHead
+        subHeaderComponent={[
+          <button
+            onClick={() => handleAdd()}
+            className="btn.btn-sm btn-info add-product"
+          >
+            Add new product
+          </button>,
+          <input
+            type="text"
+            className="cc-input form-control"
+            placeholder="Search here"
+          />,
+        ]}
+      />
+      ;
+      {/* <div className="product__info__item">
+        <div className="product__info__item__title">Kích cỡ</div>
+        <div className="product__info__item__list">
+          {sizeData.map((item, index) => (
+            <div
+              key={index}
+              className={`product__info__item__list__item ${
+                size === item ? "active" : ""
+              }`}
+              onClick={() => setSize(item.size)}
+            >
+              <span className="product__info__item__list__item__size">
+                {item.size}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div> */}
+      {showAddProduct && (
+        <AddProduct
+          showAddProduct={showAddProduct}
+          setShowAddProduct={setShowAddProduct}
+        />
+      )}
+      {showEdit && (
+        <EditProduct
+          product={product}
+          showEdit={showEdit}
+          setShowEdit={setShowEdit}
+        />
+      )}
+    </AdminLayout>
+  );
+};
+
+export default Product;

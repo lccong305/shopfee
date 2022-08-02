@@ -3,13 +3,28 @@ import cateApi from "../api/cateApi";
 import axios from "axios";
 
 import {
+  //get all
   getProductError,
   getProductStart,
   getProductSuccess,
+  //get detail
   getDetailProductSuccess,
+  //get by cate
   getProductByCateStart,
   getProductByCateError,
   getProductByCateSuccess,
+  //add
+  addProductStart,
+  addProductError,
+  addProductSuccess,
+  // Delete
+  deleteProductStart,
+  deleteProductError,
+  deleteProductSuccess,
+  //update
+  updateStart,
+  updateError,
+  updateSuccess,
 } from "./product/productSlice";
 
 import {
@@ -136,3 +151,91 @@ export const getProductByCate = async (slug, dispatch) => {
     dispatch(getProductByCateError(err));
   }
 };
+
+export const addNewProduct = async (history, dispatch, newProduct) => {
+  dispatch(addProductStart());
+  try {
+    const formData = new FormData();
+
+    formData.append("name", newProduct.name);
+    formData.append("price", newProduct.price);
+    formData.append("shortDes", newProduct.shortDes);
+    formData.append("shortDetails", "xin chao");
+    formData.append("file", newProduct.file);
+    formData.append("quantity", 100);
+    formData.append("discount", 10);
+    formData.append("view", 1);
+    formData.append("categoryName", newProduct.categoryName);
+    formData.append("size", ["s", "m"]);
+
+    const res = await axios.post(
+      "https://apieshopbasic.herokuapp.com/Product",
+      formData
+    );
+    dispatch(addProductSuccess(res.data));
+  } catch (err) {
+    console.log(err);
+    dispatch(addProductError());
+  }
+};
+
+// Delete
+export const deleteProduct = async (dispatch, id) => {
+  dispatch(deleteProductStart());
+  try {
+    let _id = JSON.stringify(id);
+    axios({
+      method: "DELETE",
+      url: "https://apieshopbasic.herokuapp.com/Product",
+      data: _id,
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => {
+      dispatch(deleteProductSuccess(id));
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch(deleteProductError());
+  }
+};
+
+//update
+
+export const updateProduct = async (dispatch, newProduct) => {
+  dispatch(updateStart());
+  try {
+    const formData = new FormData();
+
+    formData.append("id", newProduct.id);
+    formData.append("name", newProduct.name);
+    formData.append("price", newProduct.price);
+    formData.append("shortDes", newProduct.shortDes);
+    formData.append("shortDetails", "xin chao");
+    formData.append("file", newProduct.file);
+    formData.append("quantity", 100);
+    formData.append("discount", 10);
+    formData.append("view", 1);
+    formData.append("categoryName", newProduct.categoryName);
+    formData.append("size", ["s", "m"]);
+
+    const res = await axios.put(
+      "https://apieshopbasic.herokuapp.com/Product",
+      formData
+    );
+    console.log(res.data);
+    dispatch(updateSuccess(res.data));
+  } catch (err) {
+    console.log(err);
+    dispatch(updateError());
+  }
+};
+
+// axios({
+//   method: "PUT",
+//   url: "https://apieshopbasic.herokuapp.com/Product",
+//   data: formData,
+//   headers: { "Content-Type": "multipart/form-data" },
+// }).then((res) => {
+//   console.log(res.data);
+//   // dispatch(addProductSuccess(res.data));
+//   // navigate("/");
+// });

@@ -2,18 +2,18 @@ import React from "react";
 
 import { Route, Switch } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Catalog from "../pages/Catalog";
 import Cart from "../pages/Cart";
-import Product from "../pages/Product";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Payment from "../pages/Payment";
-import { ProtectedRoute } from "../utils/ProtectedRoute";
+import Catalog from "../pages/Catalog";
 import Category from "../pages/Category";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import Payment from "../pages/Payment";
+import Product from "../pages/Product";
+import Register from "../pages/Register";
+import { ProtectedRoute } from "../utils/ProtectedRoute";
 
-import ProductAD from "../admin/Product";
 import CategoryAD from "../admin/Category";
+import ProductAD from "../admin/Product";
 import AdminLayout from "../layouts/AdminLayout";
 
 const Routes = () => {
@@ -28,7 +28,6 @@ const Routes = () => {
 
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      {/* <Route path="/payment" component={Payment} /> */}
       <ProtectedRoute exact path="/admin" component={AdminLayout} />
       <ProtectedRoute exact path="/admin-product" component={ProductAD} />
       <ProtectedRoute exact path="/admin-category" component={CategoryAD} />

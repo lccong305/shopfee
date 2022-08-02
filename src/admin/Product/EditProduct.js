@@ -6,26 +6,26 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
 import "./style.scss";
-// import { addNewProduct } from "../../redux/apiRequest";
-import { addNewProduct } from "../../redux/apiRequest";
-const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
+import { addNewProduct, updateProduct } from "../../redux/apiRequest";
+const EditProduct = ({ showEdit, setShowEdit, product }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [name, setName] = useState(null);
-  const [price, setPrice] = useState("");
-  const [shortDes, setShortDes] = useState("");
-  const [image, setImage] = useState(null);
-  const [categoryName, setCategoryName] = useState("");
-  const [size, setSize] = useState([]);
-
   const getCateData = useSelector((state) => state.cate.getCategory.category);
+
+  const [id, setID] = useState(product.id);
+  const [name, setName] = useState(product.name);
+  const [price, setPrice] = useState(product.price);
+  const [shortDes, setShortDes] = useState(product.shortDes);
+  const [image, setImage] = useState(null);
+  const [categoryName, setCategoryName] = useState(product.categoryName);
+  const [size, setSize] = useState([]);
 
   var Sizes = ["s", "m", "l", "xl"];
 
   const handleClose = (e) => {
     e.preventDefault();
-
+    setShowEdit(false);
     setName("");
     setPrice("");
     setShortDes("");
@@ -34,10 +34,20 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
     setSize("");
   };
 
-  const handleAddProduct = (e) => {
+  const handleEditProduct = (e) => {
     e.preventDefault();
 
+    // let productEdited = {
+    //     id: _id,
+    //     name: name,
+    //     price: price,
+    //     shortDes: desc,
+    //     file: _image,
+    //     categoryName: category,
+    //   };
+
     const newProduct = {
+      id: product.id,
       name: name,
       price: price,
       shortDes: shortDes,
@@ -46,8 +56,8 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
       size: size,
     };
 
-    // console.log(newProduct);
-    addNewProduct(history, dispatch, newProduct);
+    updateProduct(dispatch, newProduct);
+    setID("");
     setName("");
     setPrice("");
     setShortDes("");
@@ -55,20 +65,27 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
     setCategoryName("");
     setSize("");
   };
-
+  const handleFileImage = (e) => {
+    let file = e.target.files[0];
+    setImage(file);
+  };
   return (
     <>
       <div className="AddProductContainer">
         <div className="AddProductContent">
           <div className="overlay"></div>
           <div className="edit-content">
-            <h2 className="edit-tittle">Add Product</h2>
+            <h2 className="edit-tittle">Edit product</h2>
+            <div className="form-group-edit">
+              <label>Product ID</label>
+              <input type="text" value={id} className="product-input-ad" />
+            </div>
             <form method="put" encType="multipart/form-data">
               <div className="form-group-edit">
-                <label>Product Name</label>
+                <label>Name</label>
                 <input
-                  type="text"
                   value={name}
+                  type="text"
                   className="product-input-ad"
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -76,6 +93,7 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
               <div className="form-group-edit">
                 <label>Price</label>
                 <input
+                  value={price}
                   type="text"
                   className="product-input-ad"
                   onChange={(e) => setPrice(e.target.value)}
@@ -89,6 +107,7 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Age"
+                    value={categoryName}
                     onChange={(e) => setCategoryName(e.target.value)}
                   >
                     {getCateData?.map((item) => (
@@ -104,6 +123,7 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
                 <input
                   type="text"
                   className="product-input-ad"
+                  value={shortDes}
                   onChange={(e) => setShortDes(e.target.value)}
                 />
               </div>
@@ -130,18 +150,18 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
                 <input
                   type="file"
                   className="product-input-ad"
-                  onChange={(e) => setImage(e.target.files[0])}
+                  onChange={handleFileImage}
                 />
               </div>
               <div className="form-button-edit">
                 <button
                   type="submit"
                   className="btn-add-product"
-                  onClick={handleAddProduct}
+                  onClick={handleEditProduct}
                 >
-                  Add product
+                  Edit product
                 </button>
-                <button onClick={() => setShowAddProduct(false)}>Close</button>
+                <button onClick={handleClose}>Close</button>
               </div>
             </form>
           </div>
@@ -151,4 +171,4 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

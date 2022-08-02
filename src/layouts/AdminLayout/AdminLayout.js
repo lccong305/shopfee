@@ -26,6 +26,11 @@ const AdminLayout = ({ children }) => {
     height: 500px;
     display: flex;
   `;
+  const AdminContent = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  `;
   return (
     <div>
       <div className="container">
@@ -108,7 +113,7 @@ const AdminLayout = ({ children }) => {
                 </div>
               </div>
             </SidebarAdmin>
-            {children}
+            <AdminContent> {children}</AdminContent>
           </AdminContainer>
         </div>
       </div>
