@@ -5,9 +5,8 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
-import "./style.scss";
-// import { addNewProduct } from "../../redux/apiRequest";
 import { addNewProduct } from "../../redux/apiRequest";
+import "./style.scss";
 const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -127,6 +126,7 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
               </div>
               <div className="form-group-edit">
                 <label>Image</label>
+
                 <input
                   type="file"
                   className="product-input-ad"

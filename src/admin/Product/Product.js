@@ -4,15 +4,9 @@ import AdminLayout from "../../layouts/AdminLayout/";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import { deleteProduct, getDetailProduct } from "../../redux/apiRequest";
 import AddProduct from "./AddProduct";
 import EditProduct from "./EditProduct";
-import axios from "axios";
-import { deleteProduct, getDetailProduct } from "../../redux/apiRequest";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -136,6 +130,7 @@ const Product = () => {
       {loading ? "isLoading" : ""}
       <DataTable
         fixedHeader
+        fixedHeaderScrollHeight="500PX"
         progressPending={pending}
         columns={columns}
         data={products}

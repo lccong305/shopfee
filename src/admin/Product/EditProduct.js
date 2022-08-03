@@ -17,10 +17,10 @@ const EditProduct = ({ showEdit, setShowEdit, product }) => {
   const [name, setName] = useState(product.name);
   const [price, setPrice] = useState(product.price);
   const [shortDes, setShortDes] = useState(product.shortDes);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(product.image);
   const [categoryName, setCategoryName] = useState(product.categoryName);
   const [size, setSize] = useState([]);
-
+  console.log(typeof image);
   var Sizes = ["s", "m", "l", "xl"];
 
   const handleClose = (e) => {
@@ -67,6 +67,7 @@ const EditProduct = ({ showEdit, setShowEdit, product }) => {
   };
   const handleFileImage = (e) => {
     let file = e.target.files[0];
+
     setImage(file);
   };
   return (
@@ -149,6 +150,7 @@ const EditProduct = ({ showEdit, setShowEdit, product }) => {
                 <label>Image</label>
                 <input
                   type="file"
+                  // value={image}
                   className="product-input-ad"
                   onChange={handleFileImage}
                 />
