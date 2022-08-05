@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InfinityList from "../components/InfinityList";
 
 import { getProductByCate } from "../redux/apiRequest";
@@ -14,7 +14,7 @@ const Category = () => {
 
   useEffect(() => {
     getProductByCate(slug.cate, dispatch);
-  }, []);
+  }, [dispatch, slug.cate]);
   return (
     <div>
       <div className="catalog__content">

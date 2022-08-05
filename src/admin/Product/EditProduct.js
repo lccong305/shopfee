@@ -36,16 +36,6 @@ const EditProduct = ({ showEdit, setShowEdit, product }) => {
 
   const handleEditProduct = (e) => {
     e.preventDefault();
-
-    // let productEdited = {
-    //     id: _id,
-    //     name: name,
-    //     price: price,
-    //     shortDes: desc,
-    //     file: _image,
-    //     categoryName: category,
-    //   };
-
     const newProduct = {
       id: product.id,
       name: name,

@@ -1,50 +1,83 @@
-import productApi from "../api/productApi";
-import cateApi from "../api/cateApi";
 import axios from "axios";
+import cateApi from "../api/cateApi";
+import productApi from "../api/productApi";
 
 import {
-  //get all
+  addProductError,
+  //add
+  addProductStart,
+  addProductSuccess,
+  deleteProductError,
+  // Delete
+  deleteProductStart,
+  deleteProductSuccess,
+  //get detail
+  getDetailProductSuccess,
+  getProductByCateError,
+  //get by cate
+  getProductByCateStart,
+  getProductByCateSuccess,
   getProductError,
   getProductStart,
   getProductSuccess,
-  //get detail
-  getDetailProductSuccess,
-  //get by cate
-  getProductByCateStart,
-  getProductByCateError,
-  getProductByCateSuccess,
-  //add
-  addProductStart,
-  addProductError,
-  addProductSuccess,
-  // Delete
-  deleteProductStart,
-  deleteProductError,
-  deleteProductSuccess,
+  updateError,
   //update
   updateStart,
-  updateError,
   updateSuccess,
 } from "./product/productSlice";
 
 import {
+  loginFailed,
   loginStart,
   loginSucess,
-  loginFailed,
-  registerStart,
-  registerSuccess,
-  registerFailed,
+  logoutFailed,
   logoutStart,
   logoutSucess,
-  logoutFailed,
+  registerFailed,
+  registerStart,
+  registerSuccess,
 } from "./auth/authSlice";
 import {
+  getCategoryError,
   getCategoryStart,
   getCategorySuccess,
-  getCategoryError,
 } from "./category/categorySlice";
 
-import { getUserStart, getUserSuccess, getUserFailed } from "./user/userSlice";
+import {
+  //payment info
+  paymentInfoError,
+  paymentInfoStart,
+  paymentInfoSuccess,
+  //payment paypal info
+  paymentPaypalError,
+  paymentPaypalStart,
+  paymentPaypalSuccess,
+  //payment vn payment
+  paymentVNPayStart,
+  paymentVNPaySuccess,
+  paymentVNPayError,
+  //order
+  getOrderStart,
+  getOrderSuccess,
+  getOrderError,
+  //getDetail order
+  getOrderDetailStart,
+  getOrderDetailSuccess,
+  getOrderDetailError,
+
+  //update pending order
+  changeStatusOrderStart,
+  changeStatusOrderSuccess,
+  changeStatusOrderError,
+} from "./payment/paymentSlice";
+
+import { getUserFailed, getUserStart, getUserSuccess } from "./user/userSlice";
+// import {
+//   getOrderError,
+//   getOrderStart,
+//   getOrderSuccess,
+// } from "./order/orderSlice";
+import orderApi from "../api/orderApi";
 
 // get all product
 export const getAllProduct = async (dispatch) => {
@@ -129,7 +162,7 @@ export const logOut = async (dispatch, history) => {
     dispatch(logoutFailed());
   }
 };
-
+//get category
 export const getAllCate = async (dispatch) => {
   dispatch(getCategoryStart());
   try {
@@ -151,7 +184,7 @@ export const getProductByCate = async (slug, dispatch) => {
     dispatch(getProductByCateError(err));
   }
 };
-
+//add product
 export const addNewProduct = async (history, dispatch, newProduct) => {
   dispatch(addProductStart());
   try {
@@ -199,7 +232,6 @@ export const deleteProduct = async (dispatch, id) => {
 };
 
 //update
-
 export const updateProduct = async (dispatch, newProduct) => {
   dispatch(updateStart());
   try {
@@ -229,13 +261,104 @@ export const updateProduct = async (dispatch, newProduct) => {
   }
 };
 
-// axios({
-//   method: "PUT",
-//   url: "https://apieshopbasic.herokuapp.com/Product",
-//   data: formData,
-//   headers: { "Content-Type": "multipart/form-data" },
-// }).then((res) => {
-//   console.log(res.data);
-//   // dispatch(addProductSuccess(res.data));
-//   // navigate("/");
-// });
+// payment paypal
+export const paymentPaypal = async (info, dispatch, history) => {
+  dispatch(paymentPaypalStart());
+  try {
+    const res = await axios.post(
+      "https://apieshopbasic.herokuapp.com/paypal",
+      info
+    );
+    dispatch(paymentPaypalSuccess());
+    // console.log("res.data paypal", res.data);
+    window.location = res.data;
+  } catch (err) {
+    console.log(err);
+    dispatch(paymentPaypalError());
+  }
+};
+//payment info
+export const paymentInfo = async (paymentOrderDetail, dispatch, history) => {
+  dispatch(paymentInfoStart());
+  console.log(paymentOrderDetail);
+  try {
+    const res = await axios.post(
+      "https://apieshopbasic.herokuapp.com/Payment",
+      paymentOrderDetail
+    );
+
+    console.log("res.data: ", res.data);
+    dispatch(paymentInfoSuccess(res.data));
+  } catch (err) {
+    console.log(err);
+    dispatch(paymentInfoError());
+  }
+};
+//vnpay
+export const paymentVNPay = async (info, dispatch, history) => {
+  dispatch(paymentVNPayStart());
+  try {
+    const res = await axios.post(
+      "https://apieshopbasic.herokuapp.com/vnpay",
+      info
+    );
+    dispatch(paymentVNPaySuccess());
+    console.log("res.data ", res.data);
+    window.location = res.data;
+  } catch (err) {
+    console.log(err);
+    dispatch(paymentVNPayError());
+  }
+};
+
+//get all order
+export const getAllOrder = async (dispatch) => {
+  dispatch(getOrderStart());
+  try {
+    const res = await orderApi.getAll();
+
+    dispatch(getOrderSuccess(res));
+  } catch (err) {
+    console.log(err);
+    dispatch(getOrderError());
+  }
+};
+
+//get order detail
+export const getOrderDetail = async (id, dispatch) => {
+  dispatch(getOrderDetailStart());
+  try {
+    console.log("id detail order: ", id);
+    const res = await orderApi.getDetail(id);
+    console.log("res detail order: ", res);
+    dispatch(getOrderDetailSuccess(res));
+  } catch (err) {
+    console.log(err);
+    dispatch(getOrderDetailError());
+  }
+};
+//update pending orders
+
+export const updatePendingOrder = async (id, dispatch) => {
+  dispatch(changeStatusOrderStart());
+  console.log("updatePendingOrder id: ", id);
+  let _id = JSON.stringify(id);
+  try {
+    // const res = await axios.put(
+    //   "https://apieshopbasic.herokuapp.com/OrderStatus",
+    //   id
+    // );
+    axios({
+      method: "PUT",
+      url: "https://apieshopbasic.herokuapp.com/OrderStatus",
+      data: _id,
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => {
+      dispatch(changeStatusOrderSuccess(res.data));
+      console.log(res.data);
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch(changeStatusOrderError());
+  }
+};

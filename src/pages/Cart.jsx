@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import CartItem from "../components/CartItem";
 import Helmet from "../components/Helmet";
 
-import { getAllProduct } from "../redux/apiRequest";
+// import { getAllProduct } from "../redux/apiRequest";
 import numberWithCommas from "../utils/numberWithCommas";
 
 const Cart = () => {
@@ -15,22 +15,12 @@ const Cart = () => {
   const history = useHistory();
   const products = useSelector((state) => state.products.products);
 
-  useEffect(() => {
-    getAllProduct(dispatch);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // getAllProduct(dispatch);
+  // }, [dispatch]);
   const cartItems = useSelector((state) => state.cartItems.value);
 
   const getProductBySlug = (slug) => products.find((e) => e.code === slug);
-
-  // cartItems.forEach((e) => {
-  //   let product = getProductBySlug(e.slug);
-  //   console.log("sllug: ", e.slug);
-  //   console.log("Product sau khi tim: ", product);
-  //   // res.push({
-  //   //   ...e,
-  //   //   product: product,
-  //   // });
-  // });
 
   const getCartItemsInfo = (cartItems) => {
     let res = [];
@@ -64,6 +54,8 @@ const Cart = () => {
       cartItems.reduce((total, item) => total + Number(item.quantity), 0)
     );
   }, [cartItems]);
+
+  console.log("cartItems cart page: ", cartItems);
 
   return (
     <Helmet title="Giỏ hàng">

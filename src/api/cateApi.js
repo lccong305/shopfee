@@ -10,10 +10,6 @@ const cateApi = {
     const url = "/Category";
     return axiosClient.get(url);
   },
-  //   getDetail: (slug) => {
-  //     const url = `/Product/${slug}`;
-  //     return axiosClient.get(url);
-  //   },
 };
 
 export default cateApi;

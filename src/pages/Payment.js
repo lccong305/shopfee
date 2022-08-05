@@ -6,7 +6,14 @@ import TextField from "@mui/material/TextField";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getUser } from "../redux/apiRequest";
+import {
+  getUser,
+  paymentInfo,
+  paymentPaypal,
+  paymentVNPay,
+} from "../redux/apiRequest";
+
+import { v4 as uuidv4 } from "uuid";
 
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
@@ -14,9 +21,15 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 import { Typography } from "@mui/material";
 import PaypalCheckoutButton from "../components/PaypalCheckoutButton";
-// import { PayPalButtons } from "@paypal/react-paypal-js";
+
+import { styled as sitai } from "styled-components";
+import axios from "axios";
 
 const Payment = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -52,6 +65,7 @@ const Payment = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.user?.currentUser);
   const isFetching = useSelector((state) => state.auth.isFetching);
@@ -95,10 +109,110 @@ const Payment = () => {
     if (user?.token) getUser(user?.token, dispatch);
   }, [isFetching]);
 
+  const [rate, setRate] = useState(null);
+  const [code, setCode] = useState(null);
+
+  useEffect(() => {
+    const exchangerate = async () => {
+      try {
+        const res = await axios.get(
+          "https://api.exchangerate.host/latest?base=VND&&symbols=USD"
+        );
+        setRate(res.data.rates);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    exchangerate();
+  }, []);
+  // console.log(rate);
+
+  const handlePaypal = () => {
+    if (method === "PAYPAL") {
+      console.log("cartItems: ", cartItems);
+
+      let arr = [];
+
+      const x = uuidv4();
+      cartItems.map((item, idx) => {
+        const x = {
+          quantity: item.quantity,
+          size: item.size,
+          productId: item.idProduct,
+        };
+        arr.push(x);
+      });
+
+      const paymentOrderDetail = {
+        customerId: user.id,
+        customerPhone: user.phone,
+        customerName: name,
+        customerAddress: user.address,
+        customerEmail: user.email,
+        payment: method,
+        paymentInfo: `Thanh toan voi ${method}`,
+        message: "la la la 01",
+        code: x,
+        productorder: arr,
+      };
+      const info = {
+        total: totalPrice * rate.USD,
+        paymentInfo: "thanh toan voi paypal",
+        code: x,
+      };
+      console.log("method ", method);
+      console.log("paymentOrderDetail ", paymentOrderDetail);
+      paymentInfo(paymentOrderDetail, dispatch, history);
+      paymentPaypal(info, dispatch, history);
+    } else if (method === "VNPAY") {
+      console.log("cartItems: ", cartItems);
+
+      let arr = [];
+
+      const y = uuidv4();
+      cartItems.map((item, idx) => {
+        const x = {
+          quantity: item.quantity,
+          size: item.size,
+          productId: item.idProduct,
+        };
+        arr.push(x);
+      });
+
+      const paymentOrderDetail = {
+        customerId: user.id,
+        customerPhone: user.phone,
+        customerName: name,
+        customerAddress: user.address,
+        customerEmail: user.email,
+        payment: method,
+        paymentInfo: `Thanh toan voi ${method}`,
+        message: "la la la 01",
+        code: y,
+        productorder: arr,
+      };
+      const info = {
+        total: totalPrice,
+        paymentInfo: "thanh toan voi vnpay",
+        code: y,
+      };
+      console.log("method", method);
+
+      paymentInfo(paymentOrderDetail, dispatch, history);
+      paymentVNPay(info, dispatch, history);
+    }
+  };
+
+  const [method, setMethod] = React.useState("");
+
+  const handleChangeMethod = (event) => {
+    setMethod(event.target.value);
+  };
+
   return (
     <Grid container flex spacing={2}>
       <Grid item xs={5}>
-        <h3 className="payment-title">Thong tin nhan hang</h3>
+        <h3 className="payment-title">Thông tin nhận hàng</h3>
         <Item>
           <TextField
             value={name}
@@ -135,12 +249,12 @@ const Payment = () => {
         </Item>
       </Grid>
       <Grid item xs={2}>
-        <h3 className="payment-title">Phuong thuc thanh toan</h3>
+        <h3 className="payment-title">Phương thức thanh toán</h3>
         <Item>
           <Box sx={{ display: "flex" }}>
             <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
               {/* <FormLabel component="legend">Assign responsibility</FormLabel> */}
-              <FormGroup>
+              {/* <FormGroup>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -171,17 +285,35 @@ const Payment = () => {
                   }
                   label="Antoine Llorca"
                 />
-              </FormGroup>
-              {/* <PayPalButtons style={{ layout: "horizontal" }} />; */}
+              </FormGroup> */}
+
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Phuong thuc thanh toan
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={method}
+                    label="Method"
+                    onChange={(e) => handleChangeMethod(e)}
+                  >
+                    <MenuItem value="COD">COD</MenuItem>
+                    <MenuItem value="VNPAY">VNPAY</MenuItem>
+                    <MenuItem value="PAYPAL">PAYPAL</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
               <div className="paypal-container-button">
-                <PaypalCheckoutButton product={productInfoPayment} />
+                <PaypalCheckoutButton onClick={handlePaypal} />
               </div>
             </FormControl>
           </Box>
         </Item>
       </Grid>
       <Grid item xs={4}>
-        <h3 className="payment-title">Thong tin san pham</h3>
+        <h3 className="payment-title">Thông tin sản phẩm</h3>
         <Item>
           {cartItems.map((item, idx) => (
             <div key={idx} className="payment-product-container">
@@ -194,7 +326,7 @@ const Payment = () => {
             </div>
           ))}
           <div className="payment-product-total">
-            <Typography>Tong Cong</Typography>
+            <Typography>Tổng cộng</Typography>
             <Typography>{totalPrice}</Typography>
           </div>
         </Item>
