@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Payment from "../pages/Payment";
 import Product from "../pages/Product";
 import Register from "../pages/Register";
+import News from "../pages/News";
 import { ProtectedRoute } from "../utils/ProtectedRoute";
 
 import CategoryAD from "../admin/Category";
@@ -25,6 +26,7 @@ const Routes = () => {
       <Route path="/catalog" component={Catalog} />
       <Route path="/cart" component={Cart} />
       <Route path="/category/:cate" component={Category} />
+      <Route path="/news" component={News} />
       {/* <ProtectedRoute exact path="/payment" component={Payment} /> */}
       <Route path="/payment" component={Payment} />
 

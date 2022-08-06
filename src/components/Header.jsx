@@ -121,7 +121,7 @@ const Header = () => {
               {user ? <Link to="/admin">Admin</Link> : ""}
             </div>
             <div className="header__menu__item header__menu__left__item">
-              {<Link to="#">RSS</Link> }
+              {<Link to="/news">RSS</Link> }
             </div>
           </div>
           <div className="header__menu__right">
