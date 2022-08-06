@@ -3,7 +3,6 @@ import AdminLayout from "../../layouts/AdminLayout/";
 
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
-
 import { deleteProduct, getDetailProduct } from "../../redux/apiRequest";
 import AddProduct from "./AddProduct";
 import EditProduct from "./EditProduct";
@@ -13,6 +12,8 @@ const Product = () => {
 
   const products = useSelector((state) => state.products.products);
   const loading = useSelector((state) => state.products.pending);
+  const product = useSelector((state) => state.products.product); //detail
+
   const [columns, setColumns] = useState([]);
   const [pending, setPending] = React.useState(true);
   const [size, setSize] = useState();
@@ -95,8 +96,6 @@ const Product = () => {
   const handleAdd = () => {
     setShowAddProduct(!showAddProduct);
   };
-  const product = useSelector((state) => state.products.product);
-  console.log(product);
 
   const handleEdit = (e, slug) => {
     e.preventDefault();
@@ -111,6 +110,7 @@ const Product = () => {
   const [filterText, setFilterText] = React.useState("");
   const [resetPaginationToggle, setResetPaginationToggle] =
     React.useState(false);
+
   const filteredItems = products.filter(
     (item) =>
       item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
@@ -153,25 +153,6 @@ const Product = () => {
           </div>
         }
       />
-      ;
-      {/* <div className="product__info__item">
-        <div className="product__info__item__title">Kích cỡ</div>
-        <div className="product__info__item__list">
-          {sizeData.map((item, index) => (
-            <div
-              key={index}
-              className={`product__info__item__list__item ${
-                size === item ? "active" : ""
-              }`}
-              onClick={() => setSize(item.size)}
-            >
-              <span className="product__info__item__list__item__size">
-                {item.size}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div> */}
       {showAddProduct && (
         <AddProduct
           showAddProduct={showAddProduct}

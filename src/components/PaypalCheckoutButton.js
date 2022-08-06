@@ -1,33 +1,33 @@
 import React from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import styled from "styled-components";
 
 const PaypalCheckoutButton = (props) => {
-  const { product } = props;
+  const { onClick, product } = props;
+  const ButtonPaypal = styled.div`
+    background-color: #ffc439;
+    padding: 5px 0;
+    border-radius: 4px;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 6px;
+  `;
+  const ButtonPaypalNameFirst = styled.span`
+    color: #073990;
+  `;
+  const ButtonPaypalNameSecond = styled.span`
+    color: #51a8ad;
+  `;
 
-  const handleApprove = (orderId) => {
-    alert("paid true");
-  };
   return (
-    <PayPalButtons
-      style={{ height: 35, layout: "horizontal" }}
-      // createOrder={(data, actions) => {
-      //   return actions.order.create({
-      //     purchase_units: [
-      //       {
-      //         description: "Pay the bill",
-      //         amount: {
-      //           value: product.subTotalPrice,
-      //         },
-      //       },
-      //     ],
-      //   });
-      // }}
-      // onApprove={async (data, actions) => {
-      //   const order = await actions.order.capture;
-      //   console.log(order);
-      //   handleApprove(data.orderID);
-      // }}
-    />
+    <>
+      <ButtonPaypal onClick={onClick}>
+        <ButtonPaypalNameFirst>Thanh</ButtonPaypalNameFirst>
+        <ButtonPaypalNameSecond>Toan</ButtonPaypalNameSecond>
+      </ButtonPaypal>
+    </>
   );
 };
 

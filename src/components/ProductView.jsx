@@ -20,6 +20,7 @@ const ProductView = (props) => {
 
   if (product === undefined) {
     product = {
+      idProduct: null,
       name: "",
       price: 0,
       image01: null,
@@ -37,6 +38,7 @@ const ProductView = (props) => {
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
   const [name, setName] = useState(product.name);
+  const [idProduct, setIdProduct] = useState(product.id);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -54,6 +56,8 @@ const ProductView = (props) => {
     setColor(undefined);
     setSize(undefined);
     setName(product.name);
+    setName(product.name);
+    setIdProduct(product.id);
   }, [product]);
 
   const check = () => {
@@ -73,6 +77,7 @@ const ProductView = (props) => {
   const addToCart = () => {
     if (check()) {
       let newItem = {
+        idProduct: product.id,
         slug: product.code,
         color: color,
         size: size,
@@ -92,6 +97,7 @@ const ProductView = (props) => {
   const goToCart = () => {
     if (check()) {
       let newItem = {
+        idProduct: product.id,
         slug: product.code,
         name: product.name,
         color: color,
