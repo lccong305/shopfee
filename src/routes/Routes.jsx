@@ -16,6 +16,7 @@ import Order from "../admin/Order";
 import ProductAD from "../admin/Product";
 // import ProductAD from "../admin/Product";
 import AdminLayout from "../layouts/AdminLayout";
+import HistoryOrder from "../pages/HistoryOrder";
 
 const Routes = () => {
   return (
@@ -34,6 +35,7 @@ const Routes = () => {
       <ProtectedRoute exact path="/admin-product" component={ProductAD} />
       <ProtectedRoute exact path="/admin-category" component={CategoryAD} />
       <ProtectedRoute exact path="/order" component={Order} />
+      <ProtectedRoute exact path="/history-order" component={HistoryOrder} />
     </Switch>
   );
 };

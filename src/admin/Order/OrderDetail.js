@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { AiOutlineClose } from "react-icons/ai";
+
 import "./style.scss";
 
 const OrderDetail = ({
@@ -30,7 +32,7 @@ const OrderDetail = ({
   `;
   const OrderDetailWrap = styled.div`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 70%;
+    min-width: 50%;
     height: 70%;
     background-color: #fff;
     ${"" /* text-align: center; */}
@@ -40,11 +42,10 @@ const OrderDetail = ({
   const OrderDetailContent = styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 20px;
+    padding: 10px 10px;
   `;
 
-  const OrderDetailContentLeft = styled.div`
-    width: 70%;
-  `;
   const Customer = styled.div`
     margin-top: 10px;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
@@ -55,12 +56,23 @@ const OrderDetail = ({
     justify-content: space-between;
     padding: 10px 10px;
   `;
-
+  const OrderDetailContentLeft = styled.div``;
+  const OrderDetailRightIN = styled.div``;
   const OrderDetailContentRight = styled.div``;
   const OrderDetailContentInfo = styled.div``;
+  const Close = styled.div`
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding: 5px 7px;
+    background-color: #888777;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    color: #fbf040;
+  `;
 
   const productorder = orderDetail.productorder;
-  console.log(productorder);
 
   return (
     <OrderDetailContainer>
@@ -159,7 +171,11 @@ const OrderDetail = ({
               </Customer>
             )}
           </OrderDetailContentRight>
-          <button onClick={() => setShowDetailOrder(false)}>close</button>
+          <OrderDetailRightIN>
+            <Close onClick={() => setShowDetailOrder(false)}>
+              <AiOutlineClose />
+            </Close>
+          </OrderDetailRightIN>
         </OrderDetailContent>
       </OrderDetailWrap>
     </OrderDetailContainer>

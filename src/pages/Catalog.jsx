@@ -199,13 +199,6 @@ const Catalog = () => {
                   key={index}
                   className="catalog__filter__widget__content__item"
                 >
-                  {/* <CheckBox
-                    label={item.name}
-                    onChange={(input) =>
-                      filterSelect("CATEGORY", input.checked, item)
-                    }
-                    checked={filter.category.includes(item.categorySlug)}
-                  /> */}
                   <Link to={`category/${item.code}`}>{item.name}</Link>
                 </div>
               ))}

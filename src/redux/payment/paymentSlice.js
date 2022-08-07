@@ -109,6 +109,23 @@ const paymentSlice = createSlice({
       state.orderPendingFetching = false;
       state.orderPendingError = true;
     },
+    // delete order
+
+    deleteOrderStart: (state) => {
+      state.deleteOrderFetching = true;
+    },
+    deleteOrderSuccess: (state, action) => {
+      state.deleteOrderFetching = false;
+      state.deleteOrderSuccess = true;
+      const removeIdOrder = action.payload;
+      state.dataOrder = state.dataOrder.filter(
+        (item) => item.id !== removeIdOrder
+      );
+    },
+    deleteOrderError: (state) => {
+      state.deleteOrderFetching = false;
+      state.deleteOrderError = true;
+    },
   },
 });
 export const {
@@ -136,6 +153,10 @@ export const {
   changeStatusOrderStart,
   changeStatusOrderSuccess,
   changeStatusOrderError,
+  //delete order
+  deleteOrderStart,
+  deleteOrderSuccess,
+  deleteOrderError,
 } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

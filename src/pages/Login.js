@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { loginUser } from "../redux/apiRequest";
+import Loading from "../components/Loading";
 
 const Container = styled.div`
   width: 100vw;
@@ -80,27 +81,37 @@ const Login = () => {
     // history.push("/cart");
   };
 
+  const loading = useSelector((state) => state.auth.loginFetching);
+
   return (
     <>
       <Container>
-        <Wrapper>
-          <Title>SIGN IN</Title>
-          <Form onSubmit={handleLogin}>
-            <Input
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Input
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button onClick={handleLogin}>LOGIN</Button>
-            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-            <Link>CREATE A NEW ACCOUNT</Link>
-          </Form>
-        </Wrapper>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            ({" "}
+            <Wrapper>
+              <Title>SIGN IN</Title>
+              <Form onSubmit={handleLogin}>
+                <Input
+                  placeholder="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <Input
+                  placeholder="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button onClick={handleLogin}>LOGIN</Button>
+                <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+                <Link>CREATE A NEW ACCOUNT</Link>
+              </Form>
+            </Wrapper>
+            )
+          </>
+        )}
       </Container>
     </>
   );

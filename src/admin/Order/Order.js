@@ -3,6 +3,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteOrder,
   getAllOrder,
   getOrderDetail,
   updatePendingOrder,
@@ -13,20 +14,50 @@ import { AiFillDelete } from "react-icons/ai";
 import { SiOpenaccess } from "react-icons/si";
 import { TbNotesOff, TbNotes } from "react-icons/tb";
 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+// import Modal from "@mui/material/Modal";
+
 import "./style.scss";
 import OrderDetail from "./OrderDetail";
+import Modal from "./Modal";
 
 const Order = () => {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
   const dispatch = useDispatch();
   const [showDetailOrder, setShowDetailOrder] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [idDeleteOrder, setIdDeleteOrder] = useState(null);
 
   const order = useSelector((state) => state.payment.dataOrder);
   const orderDetail = useSelector((state) => state.payment.dataOrderDetail);
   const orderDetailLoading = useSelector(
     (state) => state.payment.orderDetailFetching
   );
-  // const loading = useSelector((state) => state.products.pending);
-  // const product = useSelector((state) => state.products.product); //detail
+
+  //modal
+
+  const handleOpen = (e, id) => {
+    e.preventDefault();
+    setIdDeleteOrder(id);
+    setShowModal(true);
+  };
+  const handleClose = (e) => {
+    e.preventDefault();
+    console.log("close modal");
+    setShowModal(false);
+  };
 
   useEffect(() => {
     getAllOrder(dispatch);
@@ -92,7 +123,11 @@ const Order = () => {
               >
                 <GrView />
               </div>
-              <div className="action-order-icon">
+              <div
+                className="action-order-icon"
+                // onClick={(e) => handleDeleteOrder(row.id)}
+                onClick={(e) => handleOpen(e, row.id)}
+              >
                 <AiFillDelete />
               </div>
             </div>
@@ -108,16 +143,16 @@ const Order = () => {
     setShowDetailOrder(true);
     getOrderDetail(id, dispatch);
   };
-  console.log("orderDetail: ", orderDetail);
   const handleUpdatePending = (id) => {
     updatePendingOrder(id, dispatch);
   };
+
   return (
     <AdminLayout>
-      <button onClick={() => setShowDetailOrder(false)}>close</button>
       <DataTable
+        scrollWidth
         fixedHeader
-        fixedHeaderScrollHeight="500PX"
+        fixedHeaderScrollHeight="200PX"
         progressPending={pending}
         columns={columns}
         data={order}
@@ -126,14 +161,22 @@ const Order = () => {
         persistTableHead
         subHeaderComponent={
           <div>
-            <input
+            {/* <input
               type="text"
               className="cc-input form-control"
               placeholder="Search here"
-            />
+            /> */}
           </div>
         }
       />
+      {showModal && (
+        <Modal
+          showModal={showModal}
+          handleClose={handleClose}
+          idDeleteOrder={idDeleteOrder}
+          setShowModal={setShowModal}
+        />
+      )}
       {showDetailOrder && (
         <OrderDetail
           showDetailOrder={showDetailOrder}

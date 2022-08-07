@@ -30,6 +30,7 @@ import PaypalCheckoutButton from "../components/PaypalCheckoutButton";
 
 import { styled as sitai } from "styled-components";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 const Payment = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -67,8 +68,10 @@ const Payment = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.currentUser);
-  const userProfile = useSelector((state) => state.user?.currentUser);
-  const isFetching = useSelector((state) => state.auth.isFetching);
+  const userProfile = useSelector((state) => state.auth.currentUser);
+  console.log("payment page userProfile", userProfile);
+  const isFetching = useSelector((state) => state.user.isFetching);
+  console.log("isFetching ", isFetching);
   const cartItems = useSelector((state) => state.cartItems.value);
 
   const [totalProducts, setTotalProducts] = useState(0);
@@ -98,17 +101,14 @@ const Payment = () => {
     };
   });
 
-  const [name, setName] = useState(userProfile?.name);
+  const [name, setName] = useState(userProfile?.username);
   const [mail, setEmail] = useState(userProfile?.email);
   const [address, setAddress] = useState(userProfile?.address);
   const [phone, setPhone] = useState(userProfile?.phone);
-
+  console.log("payment");
   useEffect(() => {
-    if (!user) history.push("/login");
-    if (!user?.token) return;
     if (user?.token) getUser(user?.token, dispatch);
-  }, [isFetching]);
-
+  }, []);
   const [rate, setRate] = useState(null);
   const [code, setCode] = useState(null);
 
@@ -125,12 +125,10 @@ const Payment = () => {
     };
     exchangerate();
   }, []);
-  // console.log(rate);
 
   const handlePaypal = () => {
     if (method === "PAYPAL") {
       console.log("cartItems: ", cartItems);
-
       let arr = [];
 
       const x = uuidv4();
@@ -253,40 +251,6 @@ const Payment = () => {
         <Item>
           <Box sx={{ display: "flex" }}>
             <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-              {/* <FormLabel component="legend">Assign responsibility</FormLabel> */}
-              {/* <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={gilad}
-                      onChange={handleChange}
-                      name="gilad"
-                    />
-                  }
-                  label="COD"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={jason}
-                      onChange={handleChange}
-                      name="jason"
-                    />
-                  }
-                  label="VNPay"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={antoine}
-                      onChange={handleChange}
-                      name="antoine"
-                    />
-                  }
-                  label="Antoine Llorca"
-                />
-              </FormGroup> */}
-
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">

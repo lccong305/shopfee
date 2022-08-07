@@ -69,6 +69,10 @@ import {
   changeStatusOrderStart,
   changeStatusOrderSuccess,
   changeStatusOrderError,
+  //delete order
+  deleteOrderStart,
+  deleteOrderSuccess,
+  deleteOrderError,
 } from "./payment/paymentSlice";
 
 import { getUserFailed, getUserStart, getUserSuccess } from "./user/userSlice";
@@ -243,8 +247,8 @@ export const updateProduct = async (dispatch, newProduct) => {
     formData.append("shortDes", newProduct.shortDes);
     formData.append("shortDetails", "xin chao");
     formData.append("file", newProduct.file);
-    formData.append("quantity", 100);
-    formData.append("discount", 10);
+    formData.append("quantity", newProduct.quantity);
+    formData.append("discount", newProduct.discount);
     formData.append("view", 1);
     formData.append("categoryName", newProduct.categoryName);
     formData.append("size", ["s", "m"]);
@@ -338,16 +342,11 @@ export const getOrderDetail = async (id, dispatch) => {
   }
 };
 //update pending orders
-
 export const updatePendingOrder = async (id, dispatch) => {
   dispatch(changeStatusOrderStart());
   console.log("updatePendingOrder id: ", id);
   let _id = JSON.stringify(id);
   try {
-    // const res = await axios.put(
-    //   "https://apieshopbasic.herokuapp.com/OrderStatus",
-    //   id
-    // );
     axios({
       method: "PUT",
       url: "https://apieshopbasic.herokuapp.com/OrderStatus",
@@ -360,5 +359,25 @@ export const updatePendingOrder = async (id, dispatch) => {
   } catch (err) {
     console.log(err);
     dispatch(changeStatusOrderError());
+  }
+};
+//Delete order
+
+export const deleteOrder = async (id, dispatch) => {
+  dispatch(deleteOrderStart());
+  try {
+    let _id = JSON.stringify(id);
+    axios({
+      method: "DELETE",
+      url: "https://apieshopbasic.herokuapp.com/Order",
+      data: _id,
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => {
+      dispatch(deleteOrderSuccess(id));
+      console.log(res.data);
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch(deleteOrderError());
   }
 };
