@@ -17,6 +17,7 @@ import ProductAD from "../admin/Product";
 // import ProductAD from "../admin/Product";
 import AdminLayout from "../layouts/AdminLayout";
 import HistoryOrder from "../pages/HistoryOrder";
+import News from "../pages/News";
 
 const Routes = () => {
   return (
@@ -26,11 +27,12 @@ const Routes = () => {
       <Route path="/catalog" component={Catalog} />
       <Route path="/cart" component={Cart} />
       <Route path="/category/:cate" component={Category} />
-      {/* <ProtectedRoute exact path="/payment" component={Payment} /> */}
-      <Route path="/payment" component={Payment} />
+      <Route path="/news" component={News} />
 
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+
+      <ProtectedRoute exact path="/payment" component={Payment} />
       <ProtectedRoute exact path="/admin" component={AdminLayout} />
       <ProtectedRoute exact path="/admin-product" component={ProductAD} />
       <ProtectedRoute exact path="/admin-category" component={CategoryAD} />

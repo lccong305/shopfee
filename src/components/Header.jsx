@@ -15,6 +15,10 @@ const mainNav = [
     display: "Sản phẩm",
     path: "/catalog",
   },
+  {
+    display: "Tin tức",
+    path: "/news",
+  },
 ];
 
 const Header = () => {
@@ -124,9 +128,6 @@ const Header = () => {
             <div className="header__menu__item header__menu__left__item">
               {user && isAdmin ? <Link to="/admin">Admin</Link> : ""}
             </div>
-            <div className="header__menu__item header__menu__left__item">
-              {<Link to="#">RSS</Link>}
-            </div>
           </div>
           <div className="header__menu__right">
             <div className="header__menu__item header__menu__right__item">
@@ -161,7 +162,11 @@ const Header = () => {
                     <>
                       <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                       <DropdownLink>
-                        <Link to="/history-order"> History order</Link>
+                        {!isAdmin ? (
+                          <Link to="/history-order"> History order</Link>
+                        ) : (
+                          ""
+                        )}
                       </DropdownLink>
                     </>
                   )}

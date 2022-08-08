@@ -28,7 +28,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Typography } from "@mui/material";
 import PaypalCheckoutButton from "../components/PaypalCheckoutButton";
 
-import { styled as sitai } from "styled-components";
 import axios from "axios";
 import Loading from "../components/Loading";
 
@@ -71,7 +70,6 @@ const Payment = () => {
   const userProfile = useSelector((state) => state.auth.currentUser);
   console.log("payment page userProfile", userProfile);
   const isFetching = useSelector((state) => state.user.isFetching);
-  console.log("isFetching ", isFetching);
   const cartItems = useSelector((state) => state.cartItems.value);
 
   const [totalProducts, setTotalProducts] = useState(0);
@@ -105,7 +103,7 @@ const Payment = () => {
   const [mail, setEmail] = useState(userProfile?.email);
   const [address, setAddress] = useState(userProfile?.address);
   const [phone, setPhone] = useState(userProfile?.phone);
-  console.log("payment");
+
   useEffect(() => {
     if (user?.token) getUser(user?.token, dispatch);
   }, []);

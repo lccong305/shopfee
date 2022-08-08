@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 import { remove } from "../redux/product-modal/productModalSlice";
 import { addItem } from "../redux/shopping-cart/cartItemsSlide";
@@ -62,16 +62,10 @@ const ProductView = (props) => {
   }, [product]);
 
   const check = () => {
-    // if (color === undefined) {
-    //   alert("Vui lòng chọn màu sắc!");
-    //   return false;
-    // }
-
     if (size === undefined) {
       alert("Vui lòng chọn kích cỡ!");
       return false;
     }
-
     return true;
   };
 
@@ -259,5 +253,5 @@ ProductView.propTypes = {
   product: PropTypes.object,
 };
 
-// export default withRouter(ProductView);
-export default ProductView;
+export default withRouter(ProductView);
+// export default ProductView;

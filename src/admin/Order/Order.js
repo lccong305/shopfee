@@ -152,7 +152,7 @@ const Order = () => {
       <DataTable
         scrollWidth
         fixedHeader
-        fixedHeaderScrollHeight="200PX"
+        fixedHeaderScrollHeight="600PX"
         progressPending={pending}
         columns={columns}
         data={order}

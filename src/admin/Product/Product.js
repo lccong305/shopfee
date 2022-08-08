@@ -7,6 +7,11 @@ import { deleteProduct, getDetailProduct } from "../../redux/apiRequest";
 import AddProduct from "./AddProduct";
 import EditProduct from "./EditProduct";
 
+import { GrView, GrEdit } from "react-icons/gr";
+import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
+import { SiOpenaccess } from "react-icons/si";
+import { TbNotesOff, TbNotes } from "react-icons/tb";
+
 const Product = () => {
   const dispatch = useDispatch();
 
@@ -64,20 +69,19 @@ const Product = () => {
         },
         {
           name: "Action",
-          width: " 400px",
           cell: (row) => (
             <div className="button-action-product">
               <button
                 onClick={(e) => handleEdit(e, row.code)}
                 className="btn-edit-product-admin btn btn-primary"
               >
-                Edit
+                <GrEdit />
               </button>
               <button
                 onClick={(e) => handleDelete(e, row.id)}
                 className="btn-edit-product-admin btn btn-primary"
               >
-                Delete
+                <AiOutlineDelete />
               </button>
             </div>
           ),

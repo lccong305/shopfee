@@ -62,7 +62,6 @@ const Link = styled.a`
 
 const Login = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   let location = useLocation();
   const history = useHistory();
   const params = useParams();
