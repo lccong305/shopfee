@@ -56,7 +56,6 @@ const Home = () => {
         <SectionTitle>top sản phẩm bán chạy trong tuần</SectionTitle>
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {/* {productData.getProducts(4).map((item, index) => ( */}
             {products?.map((item, index) => (
               <ProductCard
                 key={index}
@@ -64,6 +63,7 @@ const Home = () => {
                 img02={item.image}
                 name={item.name}
                 price={Number(item.price)}
+                discount={Number(item.discount)}
                 slug={item.code}
               />
             ))}

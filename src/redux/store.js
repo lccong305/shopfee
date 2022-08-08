@@ -7,6 +7,8 @@ import authReducer from "./auth/authSlice";
 import userReducer from "./user/userSlice";
 
 import cartItemsReducer from "./shopping-cart/cartItemsSlide";
+import paymentReducer from "./payment/paymentSlice";
+import orderReducer from "./order/orderSlice";
 
 import {
   persistStore,
@@ -33,6 +35,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   cate: categoryReducer,
+  payment: paymentReducer,
+  order: orderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

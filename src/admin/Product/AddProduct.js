@@ -17,6 +17,8 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
   const [image, setImage] = useState(null);
   const [categoryName, setCategoryName] = useState("");
   const [size, setSize] = useState([]);
+  const [qty, setQty] = useState("");
+  const [discount, setDiscount] = useState("");
 
   const getCateData = useSelector((state) => state.cate.getCategory.category);
 
@@ -43,6 +45,8 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
       file: image,
       categoryName: categoryName,
       size: size,
+      quantity: qty,
+      discount: discount,
     };
 
     // console.log(newProduct);
@@ -53,6 +57,8 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
     setImage(null);
     setCategoryName("");
     setSize("");
+    setQty("");
+    setDiscount("");
   };
 
   return (
@@ -72,12 +78,29 @@ const AddProduct = ({ showAddProduct, setShowAddProduct }) => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
+
               <div className="form-group-edit">
                 <label>Price</label>
                 <input
                   type="text"
                   className="product-input-ad"
                   onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+              <div className="form-group-edit">
+                <label>Quantity</label>
+                <input
+                  type="text"
+                  className="product-input-ad"
+                  onChange={(e) => setQty(e.target.value)}
+                />
+              </div>
+              <div className="form-group-edit">
+                <label>Discount</label>
+                <input
+                  type="text"
+                  className="product-input-ad"
+                  onChange={(e) => setDiscount(e.target.value)}
                 />
               </div>
               <div className="form-group-edit">

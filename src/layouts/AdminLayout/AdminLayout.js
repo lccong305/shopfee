@@ -60,16 +60,13 @@ const AdminLayout = ({ children }) => {
                         <span>Products</span>
                       </li>
                     </Link>
-                    <Link to="/prd" style={{ textDecoration: "none" }}>
+                    <Link to="/order" style={{ textDecoration: "none" }}>
                       <li>
-                        <StoreIcon className="icon" />
-                        <span>Prd</span>
+                        <CreditCardIcon className="icon" />
+                        <span>Orders</span>
                       </li>
                     </Link>
-                    <li>
-                      <CreditCardIcon className="icon" />
-                      <span>Orders</span>
-                    </li>
+
                     <li>
                       <LocalShippingIcon className="icon" />
                       <span>Delivery</span>

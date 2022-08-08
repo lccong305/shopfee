@@ -9,12 +9,19 @@ import Login from "../pages/Login";
 import Payment from "../pages/Payment";
 import Product from "../pages/Product";
 import Register from "../pages/Register";
+import News from "../pages/News";
 import { ProtectedRoute } from "../utils/ProtectedRoute";
 
 import CategoryAD from "../admin/Category";
+import Order from "../admin/Order";
 import ProductAD from "../admin/Product";
+<<<<<<< HEAD
 import User from "../admin/User";
+=======
+// import ProductAD from "../admin/Product";
+>>>>>>> 6b537e5876ab634732717b84e3cddd01bcc5a1c9
 import AdminLayout from "../layouts/AdminLayout";
+import HistoryOrder from "../pages/HistoryOrder";
 
 const Routes = () => {
   return (
@@ -24,14 +31,23 @@ const Routes = () => {
       <Route path="/catalog" component={Catalog} />
       <Route path="/cart" component={Cart} />
       <Route path="/category/:cate" component={Category} />
-      <ProtectedRoute exact path="/payment" component={Payment} />
+      <Route path="/news" component={News} />
+      {/* <ProtectedRoute exact path="/payment" component={Payment} /> */}
+      <Route path="/payment" component={Payment} />
 
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+
+      <ProtectedRoute exact path="/payment" component={Payment} />
       <ProtectedRoute exact path="/admin" component={AdminLayout} />
       <ProtectedRoute exact path="/admin-product" component={ProductAD} />
       <ProtectedRoute exact path="/admin-category" component={CategoryAD} />
+<<<<<<< HEAD
       <ProtectedRoute exact path="/admin-user" component={User} />
+=======
+      <ProtectedRoute exact path="/order" component={Order} />
+      <ProtectedRoute exact path="/history-order" component={HistoryOrder} />
+>>>>>>> 6b537e5876ab634732717b84e3cddd01bcc5a1c9
     </Switch>
   );
 };

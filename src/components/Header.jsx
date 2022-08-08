@@ -15,6 +15,10 @@ const mainNav = [
     display: "Sản phẩm",
     path: "/catalog",
   },
+  {
+    display: "Tin tức",
+    path: "/news",
+  },
 ];
 
 const Header = () => {
@@ -28,6 +32,10 @@ const Header = () => {
   const history = useHistory();
 
   const user = useSelector((state) => state.auth?.currentUser?.token);
+  const isAdmin = useSelector((state) =>
+    state.auth?.currentUser?.roles.find((item) => item.includes("admin"))
+  );
+  console.log("Is admin header", isAdmin);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -118,7 +126,7 @@ const Header = () => {
               </div>
             ))}
             <div className="header__menu__item header__menu__left__item">
-              {user ? <Link to="/admin">Admin</Link> : ""}
+              {user && isAdmin ? <Link to="/admin">Admin</Link> : ""}
             </div>
           </div>
           <div className="header__menu__right">
@@ -140,16 +148,27 @@ const Header = () => {
               </DropdownTitle>
               {showDropdown && (
                 <DropdownContent>
-                  <DropdownLink>
-                    {!user ? (
-                      <Link to="/login">Login</Link>
-                    ) : (
-                      <button onClick={handleLogout}>Logout</button>
-                    )}
-                  </DropdownLink>
-                  <DropdownLink>
-                    <Link to="/register">Register</Link>
-                  </DropdownLink>
+                  {!user ? (
+                    <>
+                      <DropdownLink>
+                        <Link to="/login">Login</Link>
+                      </DropdownLink>
+                      <DropdownLink>
+                        <Link to="/register">Register</Link>
+                      </DropdownLink>
+                    </>
+                  ) : (
+                    <>
+                      <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
+                      <DropdownLink>
+                        {!isAdmin ? (
+                          <Link to="/history-order"> History order</Link>
+                        ) : (
+                          ""
+                        )}
+                      </DropdownLink>
+                    </>
+                  )}
                 </DropdownContent>
               )}
             </Dropdown>

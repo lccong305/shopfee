@@ -2,12 +2,39 @@
 <html lang="en">
 
 <head>
+
+  <!-- Đánh dấu JSON-LD được tạo bởi Trình trợ giúp đánh dấu dữ liệu có cấu trúc của Google. -->
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Product",
+    "name": "Yolo",
+    "image": "https://shopfee.vercel.app/static/media/slide_1.05395af1.png",
+    "description": "Hướng đến mục tiêu mang lại niềm vui ăn mặc mới mỗi ngày cho hàng triệu người tiêu dùng Việt.",
+    "offers": {
+      "@type": "Offer",
+      "price": "500,000"
+    }
+  }
+  </script>
+
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- <meta property = "og: title" content = "Gia nhập công ty tốt nhất trên thế giới!" />
+  <meta property = "og: url" content = "http://www.sharethis.com" />
+  <meta property = "og: image" content = "http://sharethis.com/images/logo.jpg" />
+  <meta property = "og: description" content = "ShareĐây là người của nó. Chúng tôi bắt buộc phải thuê những người thông minh, sáng tạo, những người có thể làm việc một cách thông minh khi chúng tôi tiếp tục phá vỡ chính danh mục mà chúng tôi đã tạo ra. Hãy tham gia với chúng tôi!" />
+  <meta property = "og: site_name" content = "ShareThis" /> -->
+  <!-- <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=62e9e043f7a6820012d2cb9d&product=sop' async='async'>
+          
+  </script> -->
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -23,6 +50,19 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>React App</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LHC42XZ86B
+"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-LHC42XZ86B');
+  </script>
+
+  <meta name="google-site-verification" content="XY5T6r050P_DywknnwIpNE3ejv0c6pPbWahJrDXmQ5A" />
 </head>
 
 <body>
@@ -132,6 +172,20 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   </script>
+
+  <!---rss feed--->
+  <!-- <div class="rss">
+   
+
+  <script language="JavaScript" src="https://feed2js.org//feed2js.php?src=https%3A%2F%2Fvnexpress.net%2Frss%2Fkhoa-hoc.rss&chan=y&date=y&utf=y&html=p"  charset="UTF-8" type="text/javascript"></script>
+
+  <noscript>
+  <a href="https://feed2js.org//feed2js.php?src=https%3A%2F%2Fvnexpress.net%2Frss%2Fkhoa-hoc.rss&chan=y&date=y&utf=y&html=y">View RSS feed</a>
+  </noscript>
+  </div> -->
+  <!---rss feed--->
+
+
 </body>
 
 </html>

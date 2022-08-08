@@ -9,6 +9,7 @@ import Section, { SectionBody, SectionTitle } from "../components/Section";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getDetailProduct } from "../redux/apiRequest";
+import Loading from "../components/Loading";
 
 const Product = (props) => {
   const slug = useParams();
@@ -22,6 +23,7 @@ const Product = (props) => {
 
   const product_detail = useSelector((state) => state.products.product);
   const products = useSelector((state) => state.products.products);
+  const pending = useSelector((state) => state.products.pending);
 
   const getProducts = (count) => {
     const max = products.length - count;
@@ -37,28 +39,34 @@ const Product = (props) => {
 
   return (
     <Helmet title={product_detail.name}>
-      <Section>
-        <SectionBody>
-          <ProductView product={product_detail} />
-        </SectionBody>
-      </Section>
-      <Section>
-        <SectionTitle>Khám phá thêm</SectionTitle>
-        <SectionBody>
-          <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {relatedProducts?.map((item, index) => (
-              <ProductCard
-                key={index}
-                img01={item.image}
-                img02={item.image}
-                name={item.name}
-                price={Number(item.price)}
-                slug={item.code}
-              />
-            ))}
-          </Grid>
-        </SectionBody>
-      </Section>
+      {pending && product_detail ? (
+        <Loading />
+      ) : (
+        <>
+          <Section>
+            <SectionBody>
+              <ProductView product={product_detail} />
+            </SectionBody>
+          </Section>
+          <Section>
+            <SectionTitle>Khám phá thêm</SectionTitle>
+            <SectionBody>
+              <Grid col={4} mdCol={2} smCol={1} gap={20}>
+                {relatedProducts?.map((item, index) => (
+                  <ProductCard
+                    key={index}
+                    img01={item.image}
+                    img02={item.image}
+                    name={item.name}
+                    price={Number(item.price)}
+                    slug={item.code}
+                  />
+                ))}
+              </Grid>
+            </SectionBody>
+          </Section>
+        </>
+      )}
     </Helmet>
   );
 };
