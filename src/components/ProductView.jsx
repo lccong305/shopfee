@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+// import { InlineShareButtons } from "sharethis-reactjs";
 
 // import { useNavigate } from "react-router-dom";
 
@@ -164,22 +165,22 @@ const ProductView = (props) => {
             </span>
           </div>
 
-          <div className="sharethis-inline-share-button">Share</div>
+          {/* <div className="sharethis-inline-share-button">Share</div> */}
 
           <div className="product__info__item">
             <div className="product__info__item__title">Màu sắc</div>
             <div className="product__info__item__list">
               {/* {product.colors.map((item, index) => (
-                <div
-                  key={index}
-                  className={`product__info__item__list__item ${
-                    color === item ? "active" : ""
-                  }`}
-                  onClick={() => setColor(item)}
-                >
-                  <div className={`circle bg-${item}`}></div>
-                </div>
-              ))} */}
+                  <div
+                    key={index}
+                    className={`product__info__item__list__item ${
+                      color === item ? "active" : ""
+                    }`}
+                    onClick={() => setColor(item)}
+                  >
+                    <div className={`circle bg-${item}`}></div>
+                  </div>
+                ))} */}
             </div>
           </div>
           <div className="product__info__item">
@@ -245,6 +246,95 @@ const ProductView = (props) => {
           </div>
         </div>
       </div>
+      <div className="product__info">
+        <h1 className="product__info__title">{product.name}</h1>
+        <div className="product__info__item">
+          <span className="product__info__item__price">
+            {/* {numberWithCommas()} */}
+            {product.price}
+          </span>
+        </div>
+
+        {/* <div class="sharethis-inline-share-button">Share</div> */}
+
+        <div className="product__info__item">
+          <div className="product__info__item__title">Màu sắc</div>
+          <div className="product__info__item__list">
+            {/* {product.colors.map((item, index) => (
+                <div
+                  key={index}
+                  className={`product__info__item__list__item ${
+                    color === item ? "active" : ""
+                  }`}
+                  onClick={() => setColor(item)}
+                >
+                  <div className={`circle bg-${item}`}></div>
+                </div>
+              ))} */}
+          </div>
+        </div>
+        <div className="product__info__item">
+          <div className="product__info__item__title">Kích cỡ</div>
+          <div className="product__info__item__list">
+            {product.sizes?.map((item, index) => (
+              <div
+                key={index}
+                className={`product__info__item__list__item ${
+                  size === item ? "active" : ""
+                }`}
+                onClick={() => setSize(item)}
+              >
+                <span className="product__info__item__list__item__size">
+                  {item}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="product__info__item">
+          <div className="product__info__item__title">Số lượng</div>
+          <div className="product__info__item__quantity">
+            <div
+              className="product__info__item__quantity__btn"
+              onClick={() => updateQuantity("minus")}
+            >
+              <i className="bx bx-minus"></i>
+            </div>
+            <div className="product__info__item__quantity__input">
+              {quantity}
+            </div>
+            <div
+              className="product__info__item__quantity__btn"
+              onClick={() => updateQuantity("plus")}
+            >
+              <i className="bx bx-plus"></i>
+            </div>
+          </div>
+        </div>
+        <div className="product__info__item">
+          <Button onClick={() => addToCart()}>thêm vào giỏ</Button>
+          <Button onClick={() => goToCart()}>mua ngay</Button>
+        </div>
+      </div>
+      <div
+        className={`product-description mobile ${
+          descriptionExpand ? "expand" : ""
+        }`}
+      >
+        <div className="product-description__title">Chi tiết sản phẩm</div>
+        <div
+          className="product-description__content"
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        ></div>
+        <div className="product-description__toggle">
+          <Button
+            size="sm"
+            onClick={() => setDescriptionExpand(!descriptionExpand)}
+          >
+            {descriptionExpand ? "Thu gọn" : "Xem thêm"}
+          </Button>
+        </div>
+      </div>
     </>
   );
 };
@@ -254,4 +344,3 @@ ProductView.propTypes = {
 };
 
 export default withRouter(ProductView);
-// export default ProductView;

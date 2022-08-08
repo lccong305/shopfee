@@ -151,7 +151,6 @@ const Header = () => {
                   {!user ? (
                     <>
                       <DropdownLink>
-                        {" "}
                         <Link to="/login">Login</Link>
                       </DropdownLink>
                       <DropdownLink>
