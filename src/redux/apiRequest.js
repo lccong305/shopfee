@@ -1,10 +1,10 @@
 import axios from "axios";
-<<<<<<< HEAD
+
 import userApi from "../api/userApi";
-=======
+
 import cateApi from "../api/cateApi";
 import productApi from "../api/productApi";
->>>>>>> 6b537e5876ab634732717b84e3cddd01bcc5a1c9
+
 
 import {
   addProductError,
@@ -49,9 +49,7 @@ import {
   getCategorySuccess,
 } from "./category/categorySlice";
 
-<<<<<<< HEAD
 
-=======
 import {
   //payment info
   paymentInfoError,
@@ -84,14 +82,14 @@ import {
   deleteOrderError,
 } from "./payment/paymentSlice";
 
-import { getUserFailed, getUserStart, getUserSuccess } from "./user/userSlice";
+//import { getUserFailed, getUserStart, getUserSuccess } from "./user/userSlice";
 // import {
 //   getOrderError,
 //   getOrderStart,
 //   getOrderSuccess,
 // } from "./order/orderSlice";
 import orderApi from "../api/orderApi";
->>>>>>> 6b537e5876ab634732717b84e3cddd01bcc5a1c9
+
 
 // get all product
 export const getAllProduct = async (dispatch) => {
