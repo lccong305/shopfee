@@ -13,6 +13,7 @@ import { ProtectedRoute } from "../utils/ProtectedRoute";
 
 import CategoryAD from "../admin/Category";
 import ProductAD from "../admin/Product";
+import User from "../admin/User";
 import AdminLayout from "../layouts/AdminLayout";
 
 const Routes = () => {
@@ -30,6 +31,7 @@ const Routes = () => {
       <ProtectedRoute exact path="/admin" component={AdminLayout} />
       <ProtectedRoute exact path="/admin-product" component={ProductAD} />
       <ProtectedRoute exact path="/admin-category" component={CategoryAD} />
+      <ProtectedRoute exact path="/admin-user" component={User} />
     </Switch>
   );
 };

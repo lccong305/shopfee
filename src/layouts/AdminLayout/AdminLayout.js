@@ -45,7 +45,7 @@ const AdminLayout = ({ children }) => {
                       <span>Dashboard</span>
                     </li>
                     <p className="title">LISTS</p>
-                    <Link to="/account_user" style={{ textDecoration: "none" }}>
+                    <Link to="/admin-user" style={{ textDecoration: "none" }}>
                       <li>
                         <PersonOutlineIcon className="icon" />
                         <span>Users</span>

@@ -12,6 +12,7 @@ const Product = () => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.products.products);
+  console.log(products + " jeeeeje");
   const loading = useSelector((state) => state.products.pending);
   const [columns, setColumns] = useState([]);
   const [pending, setPending] = React.useState(true);
