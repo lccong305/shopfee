@@ -1,3 +1,8 @@
+# Account Demo
+
+    Admin: UserName: admin, PassWork: 123
+    User: UserName: user, PassWork: 123
+    
 # React Ecommerce Web Shop
 
     Build React Ecommerce Web Shop with SASS
